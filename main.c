@@ -207,7 +207,7 @@ void _reload_playlists(void)
     cJSON *json;
     json = _list_playlists();
     char *req = cJSON_PrintUnformatted(json);
-    char *resp = _http_post("http://192.168.1.12:9000/jsonrpc.js", req);
+    char *resp = _http_post("http://192.168.0.7:9000/jsonrpc.js", req);
     cJSON * root = cJSON_Parse(resp);
     cJSON * result = cJSON_GetObjectItemCaseSensitive(root,"result");
 
@@ -313,14 +313,14 @@ int main(int argc, const char *argv[])
                     json = _load_playlist(_playlists[i].id);
                     char *tmp = cJSON_PrintUnformatted(json);
                     printf("Playing id %d : %s\n", _playlists[i].id, _playlists[i].name);
-                    _http_post("http://192.168.1.12:9000/jsonrpc.js", tmp);
+                    _http_post("http://192.168.0.7:9000/jsonrpc.js", tmp);
                     cJSON_Delete(json);
                     free(tmp);
 
                     /* Playthe player when the card is inserted*/
                     json = _basic_action("play");
                     tmp = cJSON_PrintUnformatted(json);
-                    _http_post("http://192.168.1.12:9000/jsonrpc.js", tmp);
+                    _http_post("http://192.168.0.7:9000/jsonrpc.js", tmp);
                     cJSON_Delete(json);
                     free(tmp);
 
@@ -344,7 +344,7 @@ int main(int argc, const char *argv[])
             /* Stop the player when the card is removed */
             cJSON *json = _basic_action("stop");
             char *tmp = cJSON_PrintUnformatted(json);
-            _http_post("http://192.168.1.12:9000/jsonrpc.js", tmp);
+            _http_post("http://192.168.0.7:9000/jsonrpc.js", tmp);
             cJSON_Delete(json);
             free(tmp);
 
